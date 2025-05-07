@@ -5,7 +5,10 @@ from src.schemas.user import *
 from fastapi.security import OAuth2PasswordBearer 
 from src.service import BaseService , get_base_service
 from src.models.user import User
+from src.core.config import settings
 from src.service.jwt_auth import AuthJwt
+from typing import List
+import jwt
 
 
 
@@ -21,6 +24,8 @@ def get_auth_service(
     jwt_service: AuthJwt = Depends(get_jwt_service)
 ):
     return Auth(service=base_service, jwt_service=jwt_service)
+
+
 
 class Auth:
     def __init__(
@@ -59,4 +64,4 @@ class Auth:
 
     async def refresh(self , token: str):
         return await self.jwt_service.refresh_access_token(token=token)
-        
+    

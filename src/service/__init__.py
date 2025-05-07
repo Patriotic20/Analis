@@ -4,6 +4,7 @@ from typing import TypeVar , Type , List , Dict
 from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
 from src.core.base import get_db
+
 from sqlalchemy import select
 
 
@@ -12,6 +13,10 @@ SchemaType = TypeVar("SchemaType" , bound=BaseModel)
 
 def get_base_service(db: AsyncSession = Depends(get_db)):
     return BaseService(db=db)
+
+
+
+
 
 class BaseService:
     def __init__(self , db:AsyncSession = Depends(get_db)):
@@ -290,3 +295,5 @@ class BaseService:
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     detail=f"Unexpected error: {str(e)}"
                 )
+            
+
